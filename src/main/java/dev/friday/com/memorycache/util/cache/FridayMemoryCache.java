@@ -1,4 +1,4 @@
-package dev.friday.com.memorycache;
+package dev.friday.com.memorycache.util.cache;
 
 
 import java.util.HashMap;
@@ -12,9 +12,8 @@ import java.util.logging.Logger;
  */
 public class FridayMemoryCache<K, V> {
 
-    private final Map<K, FridayCacheObject<V>> cache = new HashMap<K, FridayCacheObject<V>>();
+    private final Map<K, FridayCacheObject<V>> cache = new HashMap<>();
     private final long timeout;
-
     private static final Logger log = Logger.getLogger(FridayMemoryCache.class.getName());
 
     public FridayMemoryCache(long timeout) {
@@ -37,6 +36,7 @@ public class FridayMemoryCache<K, V> {
                 log.info("The " + key.toString() + " is expired");
                 return null;
             } else {
+                log.info("get key: " + key + " value: " + cacheObject + " from cache");
                 return cacheObject.value();
             }
         }
@@ -48,5 +48,5 @@ public class FridayMemoryCache<K, V> {
         private Boolean isExpired() {
             return System.currentTimeMillis() >= this.expiryTime;
         }
-        }
+    }
 }
